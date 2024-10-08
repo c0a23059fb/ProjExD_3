@@ -158,6 +158,27 @@ class Score: # 演習課題1
         screen.blit(self.img, self.rct)
 
 
+class Explosion: # 演習課題3
+    """
+    爆発エフェクトに関するクラス
+    """
+    def __init__(self, center):
+        self.img = pg.image.load("fig/explosion.gif")
+        self.re_img = pg.transform.flip(self.img, True, True)
+        self.explis = [self.img, self.re_img]
+        self.rct = self.img.get_rect()
+        self.re_rct = self.re_img.get_rect()
+        self.center = center
+        self.rct.center = center
+        self.re_rct.center = center
+        self.life = 5
+
+    def update(self, screen):
+        self.life -= 1
+        # if self.life >= 0:
+        #     if 
+
+
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
@@ -168,6 +189,7 @@ def main():
     # bomb = Bomb((255, 0, 0), 10)
     bombs = [Bomb((255, 0, 0), 10) for _ in range(NUM_OF_BOMBS)] # 練習問題5
     clock = pg.time.Clock()
+    exp = [] # 演習課題3
     tmr = 0
 
     while True:
@@ -195,11 +217,20 @@ def main():
                 if beam is not None:
                     if beam.rct.colliderect(bomb.rct):  # ビームと爆弾が衝突したら
                         score.score += 1
+                        exp.append(Explosion((bomb.rct.centerx, bomb.rct.centery)))
                         beams[j], bombs[i] = None, None
                         bird.change_img(6, screen)
                         pg.display.update()
             beams = [beam for beam in beams if beam is not None]
             bombs =[bomb for bomb in bombs if bomb is not None]
+
+
+        for i, j in enumerate(exp):
+            if exp[i].life < 0:
+                del exp[i]
+
+        for i, j in enumerate(exp):
+            exp[i].update(screen, )
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
