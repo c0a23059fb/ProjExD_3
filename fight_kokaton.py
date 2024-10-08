@@ -194,6 +194,7 @@ def main():
             for j, beam in enumerate(beams):
                 if beam is not None:
                     if beam.rct.colliderect(bomb.rct):  # ビームと爆弾が衝突したら
+                        score.score += 1
                         beams[j], bombs[i] = None, None
                         bird.change_img(6, screen)
                         pg.display.update()
