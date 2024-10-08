@@ -1,3 +1,4 @@
+import math
 import os
 import random
 import sys
@@ -97,6 +98,9 @@ class Beam:
         引数 bird：ビームを放つこうかとん（Birdインスタンス）
         """
         self.img = pg.image.load("fig/beam.png")  # ビームSurface
+        self.vx, self.vy = bird.dire # 演習課題4
+        self.theta = math.atan2(-self.vy,self.vx) 
+        self.img = pg.transform.rotozoom(self.img, self.theta, 1)
         self.rct = self.img.get_rect()  # ビームSurfaceのRectを抽出
         self.rct.centery = bird.rct.centery  # こうかとんの中心縦座標をビームの縦座標
         self.rct.left = bird.rct.right  # こうかとんの右座標をビームの左座標
