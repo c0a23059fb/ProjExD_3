@@ -55,6 +55,7 @@ class Bird:
         """
         self.img = __class__.imgs[(+5, 0)]
         self.rct: pg.Rect = self.img.get_rect()
+        self.rct.center = xy # 演習課題4
         self.rct.center = xy
 
     def change_img(self, num: int, screen: pg.Surface):
@@ -82,6 +83,7 @@ class Bird:
             self.rct.move_ip(-sum_mv[0], -sum_mv[1])
         if not (sum_mv[0] == 0 and sum_mv[1] == 0):
             self.img = __class__.imgs[tuple(sum_mv)]
+            self.dire = sum_mv # 演習課題4
         screen.blit(self.img, self.rct)
 
 
